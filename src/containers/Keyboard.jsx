@@ -303,9 +303,8 @@ class Keyboard extends Component {
   render() {
     return (
       <div>
-        M I D I W R I T E R
         <div style={style.header}>
-
+        M I D I W R I T E R
         </div>
         <div style={style.upperliner}>
           <ActivateToggle
@@ -372,11 +371,12 @@ const style = {
     justifyContent: "space-between"
   },
   header: {
-
+    color: "black",
+    fontSize: "1.5rem",
   },
   footer: {
     position: "absolute",
-    bottom: 0,
+    bottom: 10,
     width: "100%",
   }
 }

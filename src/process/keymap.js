@@ -196,7 +196,11 @@ module.exports = {
   "57": {
     key : "space",
     status : false,
-  }
+  },
+  // "58": {
+  //   key : "caps",
+  //   status : false,
+  // }
 }
 
 //

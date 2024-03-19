@@ -170,15 +170,19 @@ module.exports = class midi {
   }
 
 setToggleShortcut(){
-  if(!globalShortcut.isRegistered("Alt+Command+Tab")){
-    globalShortcut.register("Alt+Command+Tab", () => {
+  if(!globalShortcut.isRegistered("Alt+Tab")){
+    globalShortcut.register("Alt+Tab", () => {
       if(this.activated){
         this.enableKeyboard();
-        this.webContents.send('deactivateMidi');
+        if(this.webContents && !this.webContents.isDestroyed()){
+          this.webContents.send('deactivateMidi');
+        }
         this.activated = false;
       }else{
         this.disableKeyboard();
-        this.webContents.send('activateMidi');
+        if(this.webContents && !this.webContents.isDestroyed()){
+          this.webContents.send('activateMidi');
+        }
         this.activated = true;
       }
     });

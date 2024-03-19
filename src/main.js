@@ -1,14 +1,13 @@
-const { app, BrowserWindow, ipcMain} = require('electron/main')
-const ioHook = require('iohook');
-const easymidi = require('easymidi')
+const { app, BrowserWindow, ipcMain, globalShortcut} = require('electron/main')
 const path = require('path');
-const midi = require("./src/process/midi")
+const midi = require("./process/midi")
+
 
 const createWindow = () => {
   const mainWindow = new BrowserWindow({
     // show: false,
-    width: 1024,
-    height: 728,
+    width: 800,
+    height: 600,
     // icon: getAssetPath('icon.png'),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -19,7 +18,7 @@ const createWindow = () => {
     },
   })
   // mainWindow.webContents.openDevTools();
-  mainWindow.loadFile(path.join(__dirname, 'src/index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
   midiHandler.setWebContents(mainWindow.webContents);
 
 }
@@ -60,4 +59,6 @@ app.on('window-all-closed', () => {
 app.on('will-quit', () => {
   // Unregister all shortcuts.
   globalShortcut.unregisterAll();
+  app.quit()
+
 })

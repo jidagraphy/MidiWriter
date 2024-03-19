@@ -2,7 +2,7 @@
   "name": "MIDIWRITER",
   "version": "0.0.1",
   "description": "",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,7 +10,7 @@
     "dist": "electron-builder"
   },
   "author": "Jida Han",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
@@ -38,7 +38,8 @@
       "darwin"
     ],
     "arches": [
-      "arm64"
+      "arm64",
+      "x64"
     ]
   },
   "dependencies": {
@@ -49,14 +50,21 @@
     "iohook": "^0.9.3"
   },
   "build": {
-    "appId": "com.electron.yourappid",
+    "appId": "com.jidagraphy.midiwriter",
     "productName": "MIDIWRITER",
-    "asar": false,
+    "asar": true,
     "mac": {
       "target": [
-        "pkg"
+        "dmg"
       ],
-      "entitlements": "entitlements.mac.plist"
+      "icon" : "./dist/icon.png"
+    }
+  },
+  "dmg": {
+    "title": "MIDIWRITER",
+    "window": {
+      "width": 660,
+      "height": 400
     }
   }
 }
