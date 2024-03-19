@@ -18,8 +18,8 @@ const createWindow = () => {
       // sandbox:false,
     },
   })
-  mainWindow.webContents.openDevTools();
-  mainWindow.loadFile(path.join(__dirname, 'dist/index.html'));
+  // mainWindow.webContents.openDevTools();
+  mainWindow.loadFile(path.join(__dirname, 'src/index.html'));
   midiHandler.setWebContents(mainWindow.webContents);
 
 }

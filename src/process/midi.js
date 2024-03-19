@@ -71,8 +71,36 @@ module.exports = class midi {
     ioHook.start();
 
     // In main process.
+    ipcMain.on('keypress', (event, keycode) => {
+      if(keymap[keycode] && !keymap[keycode].status && this.activated){
+        console.log(keymap[keycode]);
+        this.sendNote(layoutPreset[this.currentLayoutPreset][keycode], true);
+        keymap[keycode].status = true;
+        if(this.webContents && !this.webContents.isDestroyed()){
+          this.webContents.send("keypress", event.keycode);
+        }
+      }
+
+      if(keycode == 57 && !this.sustain){
+        this.sustainOn();
+      }
+    })
+
+    ipcMain.on('keyup', (event, keycode) => {
+      if(keymap[keycode] && keymap[keycode].status && this.activated){
+        console.log(keymap[keycode]);
+        this.sendNote(layoutPreset[this.currentLayoutPreset][keycode], false);
+        keymap[keycode].status = false;
+        if(this.webContents && !this.webContents.isDestroyed()){
+          this.webContents.send("keyup", event.keycode);
+        }
+      }
+      if(keycode == 57 && this.sustain){
+        this.sustainOff();
+      }
+    })
+
     ipcMain.on('changeLayoutPreset', (event, arg) => {
-      // console.log(arg) // prints "ping"
       this.currentLayoutPreset = arg;
     })
 

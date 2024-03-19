@@ -17,7 +17,7 @@ contextBridge.exposeInMainWorld(
         })},
         send: (channel, data) => {
             // whitelist channels
-            let validChannels = ["toMain", "changeLayoutPreset", "changeVelocity", "toggleActivated", "changeChannel", "changeTranspose","activateMidi", "deactivateMidi"];
+            let validChannels = ["toMain","keypress", "keyup", "changeLayoutPreset", "changeVelocity", "toggleActivated", "changeChannel", "changeTranspose","activateMidi", "deactivateMidi"];
             if (validChannels.includes(channel)) {
                 ipcRenderer.send(channel, data);
             }

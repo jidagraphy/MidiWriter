@@ -220,6 +220,16 @@ class Keyboard extends Component {
     }
   }
 
+  keypress(value){
+    console.log(value)
+    window.midiApi.send("keypress", value)
+  }
+
+  keyup(value){
+    console.log(value)
+    window.midiApi.send("keyup", value)
+  }
+
   toggleActivated() {
     if(this.state.activated){
       window.midiApi.send("deactivateMidi")
@@ -308,8 +318,8 @@ class Keyboard extends Component {
           />
         </div>
         <KeyboardLayout
-          keypress={this.props.keypress}
-          keyup={this.props.keyup}
+          keypress={this.keypress.bind(this)}
+          keyup={this.keyup.bind(this)}
           keyboardState={this.state.keyboardState}
           currentLayoutPreset={this.state.currentLayoutPreset}
           transpose={this.state.transpose}
