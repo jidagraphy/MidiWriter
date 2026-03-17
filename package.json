@@ -40,18 +40,17 @@
     },
     "files": [
       "dist/**/*",
+      "assets/**/*",
       "src/main.js",
       "src/preload.cjs",
       "src/process/**/*",
-      "icon.png",
-      "icon.icns",
       "package.json"
     ],
     "mac": {
       "target": [
         "dmg"
       ],
-      "icon": "icon.icns"
+      "icon": "assets/icon.icns"
     }
   }
 }

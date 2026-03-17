@@ -125,7 +125,7 @@ export default class midi {
       if(this.activated){
         this.enableKeyboard();
       }else{
-      this.disableKeyboard();
+        this.disableKeyboard();
       }
       this.activated = !this.activated;
     })

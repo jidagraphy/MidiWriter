@@ -1,6 +1,6 @@
 # M I D I W R I T E R
 
-![Screenshot](screenshot.png)
+![Screenshot](assets/screenshot.png)
 Turn your Macbook keyboard into a MIDI Controller!
 
 ## How to use
