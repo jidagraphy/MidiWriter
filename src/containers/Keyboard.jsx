@@ -299,6 +299,12 @@ class Keyboard extends Component {
     window.midiApi.receive("deactivateMidi", (data) => {
       this.setState((state) => ({ activated: false }));
     })
+    window.midiApi.receive("midiStatus", (activated) => {
+      this.setState({ activated });
+    })
+
+    // Request current status from backend
+    window.midiApi.send("getMidiStatus");
   }
 
   render() {

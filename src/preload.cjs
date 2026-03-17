@@ -17,13 +17,13 @@ contextBridge.exposeInMainWorld(
         })},
         send: (channel, data) => {
             // whitelist channels
-            let validChannels = ["toMain","keypress", "keyup", "changeLayoutPreset", "changeVelocity", "toggleActivated", "changeChannel", "changeTranspose","activateMidi", "deactivateMidi"];
+            let validChannels = ["toMain","keypress", "keyup", "changeLayoutPreset", "changeVelocity", "toggleActivated", "changeChannel", "changeTranspose","activateMidi", "deactivateMidi", "getMidiStatus"];
             if (validChannels.includes(channel)) {
                 ipcRenderer.send(channel, data);
             }
         },
         receive: (channel, func) => {
-            let validChannels = ["fromMain", "keypress", "keyup", "activateMidi", "deactivateMidi"];
+            let validChannels = ["fromMain", "keypress", "keyup", "activateMidi", "deactivateMidi", "midiStatus"];
             if (validChannels.includes(channel)) {
                 // Deliberately strip event as it includes `sender` 
                 ipcRenderer.on(channel, (event, ...args) => func(...args));

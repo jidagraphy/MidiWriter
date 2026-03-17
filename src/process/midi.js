@@ -129,6 +129,11 @@ export default class midi {
       }
       this.activated = !this.activated;
     })
+    ipcMain.on('getMidiStatus', (event) => {
+      if (this.webContents && !this.webContents.isDestroyed()) {
+        this.webContents.send('midiStatus', this.activated);
+      }
+    })
   }
   sendNote(note, press){
     if(press){
@@ -170,20 +175,20 @@ export default class midi {
   }
 
 setToggleShortcut(){
-  if(!globalShortcut.isRegistered("Alt+Tab")){
+    if(!globalShortcut.isRegistered("Alt+Tab")){
     globalShortcut.register("Alt+Tab", () => {
+      // Trigger the centralized toggle logic
+      ipcMain.emit('toggleActivated');
+      
+      // Also notify the renderer since it might be open
       if(this.activated){
-        this.enableKeyboard();
-        if(this.webContents && !this.webContents.isDestroyed()){
-          this.webContents.send('deactivateMidi');
-        }
-        this.activated = false;
-      }else{
-        this.disableKeyboard();
         if(this.webContents && !this.webContents.isDestroyed()){
           this.webContents.send('activateMidi');
         }
-        this.activated = true;
+      }else{
+        if(this.webContents && !this.webContents.isDestroyed()){
+          this.webContents.send('deactivateMidi');
+        }
       }
     });
   }
