@@ -1,0 +1,28 @@
+{
+  "name": "midiwriter",
+  "version": "2026.3.17",
+  "author": "Jida Han",
+  "license": "MIT",
+  "description": "Turn your Macbook keyboard into a MIDI Controller!",
+  "homepage": "https://www.jidagraphy.com",
+  "main": "src/main.js",
+  "scripts": {
+    "dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.0.1",
+    "concurrently": "^9.2.1",
+    "electron": "^41.0.2",
+    "vite": "^8.0.0",
+    "wait-on": "^9.0.4"
+  },
+  "dependencies": {
+    "easymidi": "^3.2.0",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "uiohook-napi": "^1.5.4"
+  }
+}
