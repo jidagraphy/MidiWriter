@@ -19,35 +19,52 @@ export default class midi {
     this.sustainModifier = "space";
   }
 
-  start(){
+  start() {
+    // Keydown event handler with safety guards
     ioHook.on('keydown', event => {
-      let keycode = parseInt(event.keycode);
-      if(keymap[keycode] && !keymap[keycode].status && this.activated){
-        console.log(keymap[keycode]);
-        this.sendNote(layoutPreset[this.currentLayoutPreset][keycode], true);
-        keymap[keycode].status = true;
-        if(this.webContents && !this.webContents.isDestroyed()){
-          this.webContents.send("keypress", event.keycode);
-        }
-      }
+      try {
+        let keycode = parseInt(event.keycode);
+        
+        // Safety check for webContents
+        const canSend = this.webContents && !this.webContents.isDestroyed();
 
-      if(keycode == 57 && !this.sustain){
-        this.sustainOn();
+        if (keymap[keycode] && !keymap[keycode].status && this.activated) {
+          this.sendNote(layoutPreset[this.currentLayoutPreset][keycode], true);
+          keymap[keycode].status = true;
+          
+          if (canSend) {
+            this.webContents.send("keypress", event.keycode);
+          }
+        }
+
+        if (keycode == 57 && !this.sustain) {
+          this.sustainOn();
+        }
+      } catch (err) {
+        console.error('Error in uiohook keydown listener:', err);
       }
     });
 
+    // Keyup event handler with safety guards
     ioHook.on('keyup', event => {
-      let keycode = parseInt(event.keycode);
-      if(keymap[keycode] && keymap[keycode].status && this.activated){
-        console.log(keymap[keycode]);
-        this.sendNote(layoutPreset[this.currentLayoutPreset][keycode], false);
-        keymap[keycode].status = false;
-        if(this.webContents && !this.webContents.isDestroyed()){
-          this.webContents.send("keyup", event.keycode);
+      try {
+        let keycode = parseInt(event.keycode);
+        const canSend = this.webContents && !this.webContents.isDestroyed();
+
+        if (keymap[keycode] && keymap[keycode].status && this.activated) {
+          this.sendNote(layoutPreset[this.currentLayoutPreset][keycode], false);
+          keymap[keycode].status = false;
+          
+          if (canSend) {
+            this.webContents.send("keyup", event.keycode);
+          }
         }
-      }
-      if(keycode == 57 && this.sustain){
-        this.sustainOff();
+        
+        if (keycode == 57 && this.sustain) {
+          this.sustainOff();
+        }
+      } catch (err) {
+        console.error('Error in uiohook keyup listener:', err);
       }
     });
 
@@ -193,5 +210,15 @@ setToggleShortcut(){
 
     globalShortcut.unregisterAll();
     this.setToggleShortcut();
+  }
+
+  stop() {
+    try {
+      ioHook.stop();
+      ioHook.removeAllListeners();
+      console.log('uiohook stopped successfully');
+    } catch (err) {
+      console.error('Error stopping uiohook:', err);
+    }
   }
 }

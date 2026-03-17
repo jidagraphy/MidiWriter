@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 // import { keypress, keyup, changeLayoutPreset, changeVelocity, changeChannel, changeTranspose, activateMidi, deactivateMidi } from '../actions/keyboard';
+import packageJson from '../../package.json';
 import { ActivateToggle, KeyboardLayout, LayoutSelector, VelocitySlider, ChannelSelector, TransposeModifier } from '../components'
 import layoutPreset from "../process/layoutPreset/index.js";
 
@@ -338,7 +339,7 @@ class Keyboard extends Component {
           />
         </div>
         <div style={style.footer}>
-          v0.0.1 by @jidagraphy
+          v{packageJson.version} by @jidagraphy
         </div>
       </div>
     );

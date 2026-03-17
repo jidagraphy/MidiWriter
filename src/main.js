@@ -33,11 +33,14 @@ const createWindow = () => {
   midiHandler.setWebContents(mainWindow.webContents);
 }
 
-midiHandler.start();
-
 app.whenReady().then(() => {
-  createWindow();
-  midiHandler.disableKeyboard();
+  try {
+    midiHandler.start();
+    createWindow();
+    midiHandler.disableKeyboard();
+  } catch (err) {
+    console.error('Failed to start MIDI handler:', err);
+  }
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
@@ -61,5 +64,5 @@ app.on('window-all-closed', () => {
 
 app.on('will-quit', () => {
   globalShortcut.unregisterAll();
-  app.quit();
+  midiHandler.stop();
 });

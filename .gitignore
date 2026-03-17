@@ -1,12 +1,23 @@
-node_modules
-dist
+# Dependencies
+node_modules/
+
+# Production Build Artifacts
+dist/
+release/
+
+# macOS files
 .DS_Store
+
+# Logs
 *.log
-.gemini
-out
-package-lock.json
-brain
-*.icns
-*.png
-!screenshot.png
-!icon.png
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Antigravity/Agent artifacts
+.gemini/
+brain/
+
+# Local IDE settings
+.vscode/
+.idea/
